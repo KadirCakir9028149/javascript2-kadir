@@ -18,6 +18,6 @@ submit.addEventListener('click', function(e){
 
 function optellen(a, b) {
 
-  return a / b; 
+  return 100 - (100 * b / 100); 
 }
 
