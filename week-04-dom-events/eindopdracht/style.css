@@ -90,7 +90,7 @@ main {
 }
 
 #tasks input[type="checkbox"]:checked + span,
-#tasks li.checked span {
+#tasks li.afgevinkt span {
   text-decoration: line-through;
   color: #999;
 }
