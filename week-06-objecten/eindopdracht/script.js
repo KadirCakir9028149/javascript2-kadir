@@ -8,25 +8,57 @@ const users = [
 let filter = 'all';
 
 const showUsers = (users) => {
-  // Gebruik destructuring voor elke user: const { name, email, role, active } = user
-  // Toon elke user als een <article> in #users
+  const usersContainer = document.getElementById('users');
+  const userCards = users.map((user) => {
+    const { name, email, role, active } = user;
+    const article = document.createElement('article');
+    const heading = document.createElement('h3');
+    const emailParagraph = document.createElement('p');
+    const roleParagraph = document.createElement('p');
+    const statusParagraph = document.createElement('p');
+
+    heading.textContent = name;
+    emailParagraph.textContent = email;
+    roleParagraph.textContent = `Rol: ${role}`;
+    statusParagraph.textContent = `Status: ${active ? 'Actief' : 'Inactief'}`;
+
+    article.append(heading, emailParagraph, roleParagraph, statusParagraph);
+    return article;
+  });
+
+  usersContainer.replaceChildren(...userCards);
 };
 
 const filterUsers = () => {
-  // Als filter 'admin' is, toon alleen gebruikers met role === 'admin'
-  // Anders toon je alle gebruikers
-  // Roep showUsers() aan met de gefilterde lijst
+  const filteredUsers = filter === 'admin'
+    ? users.filter(({ role }) => role === 'admin')
+    : users;
+
+  showUsers(filteredUsers);
 };
 
-// Maak een eventlistener voor de #filter-admin button
-// Zet filter op 'admin' en roep filterUsers() aan
+document.getElementById('filter-admin').addEventListener('click', () => {
+  filter = 'admin';
+  filterUsers();
+});
 
-// Maak een eventlistener voor de #filter-all button
-// Zet filter op 'all' en roep filterUsers() aan
+document.getElementById('filter-all').addEventListener('click', () => {
+  filter = 'all';
+  filterUsers();
+});
 
-// Maak een eventlistener voor het #user-form submit event
-// Lees naam, email en role uit de invoervelden
-// Maak een nieuw user object aan met spread op een default object
-// Voeg toe aan de array en roep filterUsers() aan
+document.getElementById('user-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const role = document.getElementById('role').value;
+  const defaultUser = { name: '', email: '', role: 'user', active: true };
+  const newUser = { ...defaultUser, name, email, role };
+
+  users.push(newUser);
+  event.currentTarget.reset();
+  filterUsers();
+});
 
 filterUsers();
