@@ -1,1 +1,6 @@
-[]
+[
+  { "title": "Spirited Away", "director": "Hayao Miyazaki", "year": 2001, "genre": "Animatie" },
+  { "title": "The Martian", "director": "Ridley Scott", "year": 2015, "genre": "Sciencefiction" },
+  { "title": "Hidden Figures", "director": "Theodore Melfi", "year": 2016, "genre": "Drama" },
+  { "title": "Paddington 2", "director": "Paul King", "year": 2017, "genre": "Komedie" }
+]

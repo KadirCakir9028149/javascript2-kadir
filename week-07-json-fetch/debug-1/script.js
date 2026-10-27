@@ -1,7 +1,6 @@
-// Fout gevonden: _______________
-// Oplossing: _______________
+// Fout was: de fetch gebruikte new.json, maar het bestand heet news.json.
 
-fetch('./new.json')
+fetch('./news.json')
   .then(r => r.json())
   .then(messages => {
     const list = document.querySelector('#results');
