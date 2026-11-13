@@ -17,28 +17,52 @@ let searchTerm = '';
 let sorting = '';
 
 const showProducts = (products) => {
-  // Toon elk product als een <article> in #products
-  // Laat in #counter de hoeveelheid producten zien
+  const productList = document.querySelector('#products');
+  const counter = document.querySelector('#counter');
+
+  productList.innerHTML = '';
+  counter.textContent = `${products.length} producten`;
+
+  products.forEach(product => {
+    const article = document.createElement('article');
+    const name = document.createElement('h3');
+    const price = document.createElement('p');
+
+    name.textContent = product.name;
+    price.textContent = `€${product.price}`;
+
+    article.append(name, price);
+    productList.append(article);
+  });
 };
 
 const filterProducts = () => {
-  // Maak een variabele 'filtered' aan door de products array te filteren op searchTerm
-  // Gebruik hiervoor filter() en includes() en toLowerCase()
+  let filtered = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm)
+  );
 
-  // Filter hier op sorting:
-  // als sorting 'low' is, sorteer van laag naar hoog op prijs
-  // als sorting 'high' is, sorteer van hoog naar laag op prijs
+  if (sorting === 'low') {
+    filtered.sort((a, b) => a.price - b.price);
+  } else if (sorting === 'high') {
+    filtered.sort((a, b) => b.price - a.price);
+  }
 
   showProducts(filtered);
 };
 
-// Maak een eventlistener voor de #search-bar input
-// Sla de waarde op in de searchTerm variabele en roep filterProducts() aan
+document.querySelector('#search-bar').addEventListener('input', (event) => {
+  searchTerm = event.target.value.toLowerCase();
+  filterProducts();
+});
 
-// Maak een eventlistener voor de #sort-low button
-// Zet sorting op 'low' en roep filterProducts() aan
+document.querySelector('#sort-low').addEventListener('click', () => {
+  sorting = 'low';
+  filterProducts();
+});
 
-// Maak een eventlistener voor de #sort-high button
-// Zet sorting op 'high' en roep filterProducts() aan
+document.querySelector('#sort-high').addEventListener('click', () => {
+  sorting = 'high';
+  filterProducts();
+});
 
 filterProducts();

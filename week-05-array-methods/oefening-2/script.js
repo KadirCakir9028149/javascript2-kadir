@@ -1,8 +1,47 @@
 const names = ['Anna', 'Bob', 'Charlotte', 'David', 'Emma', 'Frank', 'Grace', 'Henk', 'Isabel', 'Jan', 'Karen', 'Lars'];
 
-// Sectie 1: zoek de eerste naam die begint met de ingevoerde letter
-//           gebruik find() + startsWith() + toLowerCase(). 
-//           Zorg dat de input leeg is nadat de zoekopdracht is voltooid 
-// Sectie 2: controleer of een ingevoerde naam in de lijst staat (uitkomst is true of false)
-//           gebruik includes() + toLowerCase()
-//           Zorg dat de input leeg is nadat de zoekopdracht is voltooid 
+const findInput = document.querySelector('#search-find');
+const findOutput = document.querySelector('#output-find');
+const includesInput = document.querySelector('#search-includes');
+const includesOutput = document.querySelector('#output-includes');
+
+findInput.addEventListener('input', () => {
+  const letter = findInput.value.trim().toLowerCase();
+
+  if (letter === '') {
+    findOutput.textContent = '';
+    return;
+  }
+
+  const foundName = names.find(name =>
+    name.toLowerCase().startsWith(letter)
+  );
+
+  findOutput.textContent = foundName
+    ? `Eerste naam met "${letter}": ${foundName}`
+    : `Geen naam gevonden met "${letter}".`;
+});
+
+findInput.addEventListener('change', () => {
+  findInput.value = '';
+});
+
+includesInput.addEventListener('input', () => {
+  const searchedName = includesInput.value.trim().toLowerCase();
+
+  if (searchedName === '') {
+    includesOutput.textContent = '';
+    return;
+  }
+
+  const lowerCaseNames = names.map(name => name.toLowerCase());
+  const isInList = lowerCaseNames.includes(searchedName);
+
+  includesOutput.textContent = isInList
+    ? 'Ja, deze naam staat in de lijst.'
+    : 'Nee, deze naam staat niet in de lijst.';
+});
+
+includesInput.addEventListener('change', () => {
+  includesInput.value = '';
+});
